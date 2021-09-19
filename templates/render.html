@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<script>
+    var value_1 = value;
+</script>
+<!-- <script>
+    var guid = 'hash'
+
+    $(function () {
+        $('#tp_otherinfo').find('img').each(function () {
+            var srcpath = $(this).attr('src');
+            srcpath = srcpath.replace('resume_id', guid);
+            $(this).attr('src', srcpath);
+        });
+    });
+</script> -->
+
+<html>
+
+<head>
+    <title>qrmyresume</title>
+</head>
+
+<body>
+    <h1>Find your resume QR below:</h1>
+    <img src="{{ qrcode(value_1, error_correction='H' , icon_img='icon.jpg' ) }}">
+    <br>
+</body>
+
+</html>
