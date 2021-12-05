@@ -11,7 +11,11 @@ from flask_qrcode import QRcode
 app = Flask(__name__)
 qrcode = QRcode(app)
 ALLOWED_EXTENSIONS = {'pdf'}
+<<<<<<< HEAD
 app.config['UPLOAD_FOLDER'] = './uploads'
+=======
+app.config['UPLOAD_FOLDER'] = re.escape(r'C:\Users\tarun\OneDrive\Documents\Projects\qrmyresume\uploads')
+>>>>>>> upstream/master
 app.config['MAX_CONTENT_LENGTH'] = 40000000
 def allowed_file(filename):
     return '.' in filename and \
@@ -34,7 +38,11 @@ def upload_file():
 
 @app.route('/render')
 def render():
+<<<<<<< HEAD
    url = 'https://www.facebook.com'
+=======
+   url = "https://linkedin.com"
+>>>>>>> upstream/master
    return render_template("render.html", value = url )
 
 @app.route("/")
