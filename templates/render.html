@@ -1,36 +1,11 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-=======
-<script>
-    var value_1 = value;
-</script>
-<!-- <script>
-    var guid = 'hash'
-
-    $(function () {
-        $('#tp_otherinfo').find('img').each(function () {
-            var srcpath = $(this).attr('src');
-            srcpath = srcpath.replace('resume_id', guid);
-            $(this).attr('src', srcpath);
-        });
-    });
-</script> -->
->>>>>>> upstream/master
-
 <html>
-
 <head>
     <title>qrmyresume</title>
 </head>
-
 <body>
     <h1>Find your resume QR below:</h1>
-<<<<<<< HEAD
-    <img class="qrcode" src="{{qrcode('https://www.linkedin.com', error_correction='H' , icon_img='icon.jpg' ) }}">
-=======
-    <img src="{{ qrcode(value_1, error_correction='H' , icon_img='icon.jpg' ) }}">
->>>>>>> upstream/master
+    <img id="qr"  src="{{ filename }}"/>
     <br>
 </body>
-
 </html>

@@ -1,22 +1,18 @@
 # coding=utf-8
 from datetime import time
-from flask import Flask, render_template, request
-from werkzeug.utils import redirect, secure_filename
-import os
-import re
+from flask import Flask, render_template, request, session, url_for
+from werkzeug.utils import redirect, secure_filename, send_from_directory
+import os, json
 import hashlib
-from flask_qrcode import QRcode
+import qrcode
 
+key = os.urandom(12).hex()
 
 app = Flask(__name__)
-qrcode = QRcode(app)
 ALLOWED_EXTENSIONS = {'pdf'}
-<<<<<<< HEAD
 app.config['UPLOAD_FOLDER'] = './uploads'
-=======
-app.config['UPLOAD_FOLDER'] = re.escape(r'C:\Users\tarun\OneDrive\Documents\Projects\qrmyresume\uploads')
->>>>>>> upstream/master
 app.config['MAX_CONTENT_LENGTH'] = 40000000
+app.config['SECRET_KEY'] = key
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -32,22 +28,25 @@ def upload_file():
          buf = file.read()
          hasher.update(buf)
          filename = (hasher.hexdigest())
-         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-         return redirect('/render')
+         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename + '.pdf'))
+         (qrcode.make("http://localhost:5000/{0}".format(filename))).save("./static/qr_render/{0}".format(str(filename) + '.jpg'))
+         session['filename'] = filename + '.jpg'
+         return redirect(url_for('render', filename = filename))
 
 
 @app.route('/render')
 def render():
-<<<<<<< HEAD
-   url = 'https://www.facebook.com'
-=======
-   url = "https://linkedin.com"
->>>>>>> upstream/master
-   return render_template("render.html", value = url )
+   filename = request.args['filename']
+   filename = session['filename']
+   return render_template("render.html", filename=('static/qr_render/' + filename))
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route('/<variable>', methods=['GET'])
+def send_pdf(variable):
+   return send_from_directory(app.config['UPLOAD_FOLDER'], variable + '.pdf', environ=request.environ)
 
 
 if __name__ == "__main__":
