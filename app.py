@@ -26,6 +26,7 @@ def upload_file():
          filename = secure_filename(file.filename)
          hasher = hashlib.md5()
          buf = file.read()
+         file.seek(0)
          hasher.update(buf)
          filename = (hasher.hexdigest())
          file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename + '.pdf'))
